@@ -40,15 +40,28 @@ public class Main {
 		
 		int resultA = a * d + b * c; int resultB = b * d;
 		int smaller = resultA >= resultB ? resultB : resultA;
+		int bigger = resultA >= resultB ? resultA : resultB;
+		int shareMax = getMaxNum(bigger, smaller);
+		/*
 		for(int i = smaller; i >= 2; i--) {
 			if(resultA % i == 0 && resultB % i == 0) {
 				resultA /= i; resultB /= i;
+				break;
 			}
-		}
+		}*/
+		resultA /= shareMax; resultB /= shareMax;
 		bw.write(Integer.toString(resultA) + " " + Integer.toString(resultB));
 		bw.flush();
 		bw.close();
 		br.close();
 	}
 
+	// 유클리드 호제법 사용 - 위키백과 참조 
+	public static int getMaxNum(int big, int small){
+		int newNum = big % small;
+		if(newNum == 0)
+			return small;
+		else
+			return getMaxNum(small, newNum);
+	}
 }
