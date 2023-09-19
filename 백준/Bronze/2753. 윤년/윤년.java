@@ -3,12 +3,17 @@ import java.util.*;
 import java.io.*;
 
 /**
- 문제
+윤년 성공
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+1 초	128 MB	324569	169849	142101	52.118%
+문제
 연도가 주어졌을 때, 윤년이면 1, 아니면 0을 출력하는 프로그램을 작성하시오.
 
 윤년은 연도가 4의 배수이면서, 100의 배수가 아닐 때 또는 400의 배수일 때이다.
 
-예를 들어, 2012년은 4의 배수이면서 100의 배수가 아니라서 윤년이다. 1900년은 100의 배수이고 400의 배수는 아니기 때문에 윤년이 아니다. 하지만, 2000년은 400의 배수이기 때문에 윤년이다.
+예를 들어, 2012년은 4의 배수이면서 100의 배수가 아니라서 윤년이다. 
+1900년은 100의 배수이고 400의 배수는 아니기 때문에 윤년이 아니다. 
+하지만, 2000년은 400의 배수이기 때문에 윤년이다.
 
 입력
 첫째 줄에 연도가 주어진다. 연도는 1보다 크거나 같고, 4000보다 작거나 같은 자연수이다.
@@ -20,7 +25,6 @@ import java.io.*;
 2000
 예제 출력 1 
 1
-
 예제 입력 2 
 1999
 예제 출력 2 
@@ -32,20 +36,16 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int year = Integer.parseInt(br.readLine());
 		
-		int year = Integer.parseInt(st.nextToken());
-		
-		
-		if(year % 4 == 0) {
-			if(year % 400 == 0)
-				System.out.printf("%d", 1);
-			else if(year % 100 == 0)
-				System.out.printf("%d", 0);
-			else 
-				System.out.printf("%d", 1);
-		}else
-			System.out.printf("%d", 0);
+		if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+			bw.write(Integer.toString(1));
+		else
+			bw.write(Integer.toString(0));
+		bw.flush();
+		bw.close();
+		br.close();
 	}
 
 }
