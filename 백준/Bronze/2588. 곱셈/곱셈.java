@@ -3,6 +3,8 @@ import java.util.*;
 import java.io.*;
 
 /**
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+1 초	128 MB	386425	181013	151333	46.911%
 문제
 (세 자리 수) × (세 자리 수)는 다음과 같은 과정을 통하여 이루어진다.
 
@@ -15,6 +17,15 @@ import java.io.*;
 
 출력
 첫째 줄부터 넷째 줄까지 차례대로 (3), (4), (5), (6)에 들어갈 값을 출력한다.
+
+예제 입력 1 
+472
+385
+예제 출력 1 
+2360
+3776
+1416
+181720
  */
 
 public class Main {
@@ -22,20 +33,28 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		//StringTokenizer st = new StringTokenizer(br.readLine());
+		StringBuilder sb = new StringBuilder();
 		
-		int num_1 = Integer.parseInt(br.readLine());
-		int num_2 = Integer.parseInt(br.readLine());
+		Integer num1 = Integer.parseInt(br.readLine());
+		Integer num2 = Integer.parseInt(br.readLine());
 		
-		String strNum_2 = Integer.toString(num_2);
+		Integer copyNum2 = num2;
+		Integer mulNum = -1;
 		
-		int[] numArr = new int[strNum_2.length()];
-		
-		for(int i = strNum_2.length() - 1; i >= 0; i--) {
-			char num = strNum_2.charAt(i);
-			numArr[i] =  num_1 * Character.getNumericValue(num);
+		while(copyNum2 != 0) {
+			// (2) 의 가장 낮은 숫자부터 추출한다.
+			mulNum = copyNum2 % 10;
+			
+			// 그 다음 낮은 숫자를 추출하기 위해서 10으로 나눈다.
+			copyNum2 /= 10;
+			
+			// (2) 숫자에서 추출된 가장 낮은 숫자를 (1) 과 곱하여 (3, 4, 5) 를 차례대로 얻는다) 
+			sb.append(mulNum * num1); sb.append("\n");
 		}
-		System.out.printf("%d\n%d\n%d\n%d", numArr[2], numArr[1], numArr[0], num_1 * num_2);
+		
+		// (6) 은 num1과 num2를 곱해주기만 하면 된다. (최종값)
+		sb.append(num1 * num2);
+		System.out.println(sb);
 	}
 
 }
