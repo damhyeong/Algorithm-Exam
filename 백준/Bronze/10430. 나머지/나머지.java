@@ -3,6 +3,8 @@ import java.util.*;
 import java.io.*;
 
 /**
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+1 초	256 MB	396322	204288	176361	51.844%
 문제
 (A+B)%C는 ((A%C) + (B%C))%C 와 같을까?
 
@@ -32,14 +34,18 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		int a = Integer.parseInt(st.nextToken());
-		int b = Integer.parseInt(st.nextToken());
-		int c = Integer.parseInt(st.nextToken());
+		Integer A = Integer.parseInt(st.nextToken());
+		Integer B = Integer.parseInt((String) st.nextElement());
+		Integer C = Integer.parseInt(st.nextToken());
 		
-		System.out.printf("%d\n", (a + b) % c);
-		System.out.printf("%d\n", ((a % c) + (b % c)) % c);
-		System.out.printf("%d\n", (a * b) % c);
-		System.out.printf("%d\n", ((a % c) * (b % c)) % c);
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append((A + B) % C); sb.append("\n");
+		sb.append(((A % C) + (B % C)) % C); sb.append("\n");
+		sb.append((A * B) % C); sb.append("\n");
+		sb.append(((A % C) * (B % C)) % C); sb.append("\n");
+		
+		System.out.println(sb);
 	}
 
 }
