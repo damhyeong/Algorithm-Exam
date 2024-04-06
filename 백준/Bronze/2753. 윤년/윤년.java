@@ -5,7 +5,8 @@ import java.io.*;
 /**
 윤년 성공
 시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
-1 초	128 MB	324569	169849	142101	52.118%
+1 초	128 MB	371677	193803	161403	51.892%
+
 문제
 연도가 주어졌을 때, 윤년이면 1, 아니면 0을 출력하는 프로그램을 작성하시오.
 
@@ -36,16 +37,32 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int year = Integer.parseInt(br.readLine());
 		
-		if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
-			bw.write(Integer.toString(1));
-		else
-			bw.write(Integer.toString(0));
-		bw.flush();
-		bw.close();
-		br.close();
+		boolean isYun = false;
+		
+		// 4의 배수는 윤년의 기본 조건이다.
+		
+		if(year % 400 == 0) { // 400에 나눠지면 그냥 윤년이다.
+			isYun = true;
+		} else if (year % 4 == 0) {
+			// 윤년이기 위해서는, 100의 배수가 아니며, 400의 배수 일 때이다.
+			if(year % 100 != 0) { // 윤년 
+				isYun = true;
+			} else { // 윤년 아님 
+				isYun = false;
+			}
+		// 400에 나눠지지 않으며, 4에도 나눠지지 않는다면, 윤년이 아니다. 
+		} else {
+			isYun = false;
+		}
+		
+		if(isYun) {
+			System.out.println("1");
+		} else {
+			System.out.println("0");
+		}
+		
 	}
 
 }
