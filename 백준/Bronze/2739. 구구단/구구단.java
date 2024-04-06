@@ -3,6 +3,9 @@ import java.util.*;
 import java.io.*;
 
 /**
+구구단 성공
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+1 초	128 MB	422415	212174	176791	50.749%
 문제
 N을 입력받은 뒤, 구구단 N단을 출력하는 프로그램을 작성하시오. 출력 형식에 맞춰서 출력하면 된다.
 
@@ -31,13 +34,14 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		
-		int n = Integer.parseInt(st.nextToken());
+		int n = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
 		
 		for(int i = 1; i < 10; i++) {
-			System.out.printf("%d * %d = %d\n", n, i, n * i);
+			sb.append(n); sb.append(" * "); sb.append(i); sb.append(" = "); sb.append(n * i); sb.append("\n");
 		}
+		
+		System.out.println(sb.toString());
 	}
 
 }
