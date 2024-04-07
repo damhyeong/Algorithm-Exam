@@ -3,8 +3,12 @@ import java.util.*;
 import java.io.*;
 
 /**
+영수증
+
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+1 초	1024 MB	125983	69658	61859	56.043%
+
 문제
-준원이는 저번 주에 살면서 처음으로 코스트코를 가 봤다. 정말 멋졌다. 그런데, 몇 개 담지도 않았는데 수상하게 높은 금액이 나오는 것이다! 준원이는 영수증을 보면서 정확하게 계산된 것이 맞는지 확인해보려 한다.
 
 영수증에 적힌,
 
@@ -36,7 +40,6 @@ $1 ≤ N ≤ 100$ 
 $1 ≤ a ≤ 1\,000\,000$ 
  
 $1 ≤ b ≤ 10$ 
-
 예제 입력 1 
 260000
 4
@@ -44,9 +47,19 @@ $1 ≤ b ≤ 10$ 
 30000 2
 10000 6
 5000 8
-
 예제 출력 1 
 Yes
+영수증에 적힌 구매할 물건들의 목록으로 계산한 총 금액은 20000 × 5 + 30000 × 2 + 10000 × 6 + 5000 × 8 = 260000원이다. 이는 영수증에 적힌 총 금액인 260000원과 일치한다. 
+
+예제 입력 2 
+250000
+4
+20000 5
+30000 2
+10000 6
+5000 8
+예제 출력 2 
+No
  */
 
 public class Main {
@@ -54,21 +67,23 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int total = Integer.parseInt(br.readLine());
-		int t = Integer.parseInt(br.readLine());
-		int sum = 0;
+		int totalPrice = Integer.parseInt(br.readLine());
 		
-		for(int i = 0; i < t; i++) {
+		int loop = Integer.parseInt(br.readLine());
+		
+		int newPrice = 0;
+		
+		while(loop-- > 0) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
-			sum += a * b;
+			int price = Integer.parseInt(st.nextToken());
+			int n = Integer.parseInt(st.nextToken());
+			newPrice += price * n;
 		}
 		
-		if(sum == total)
-			System.out.printf("%s", "Yes");
+		if(totalPrice == newPrice)
+			System.out.println("Yes");
 		else
-			System.out.printf("%s", "No");
+			System.out.println("No");
 	}
 
 }
