@@ -3,6 +3,11 @@ import java.util.*;
 import java.io.*;
 
 /**
+합
+
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+1 초	128 MB	280455	179116	151476	64.106%
+
 문제
 n이 주어졌을 때, 1부터 n까지 합을 구하는 프로그램을 작성하시오.
 
@@ -23,18 +28,13 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int n = Integer.parseInt(st.nextToken());
-		int sum = 0;
+		int num = Integer.parseInt(br.readLine());
+		int total = 0;
 		
-		StringBuilder sb = new StringBuilder();
-		
-		for(int i = 1; i <= n; i++) {
-			sum += i;
+		for(int i = 1; i <= num; i++) {
+			total += i;
 		}
-		
-		sb.append(sum);
-		System.out.print(sb);
+		System.out.println(total);
 	}
 
 }
