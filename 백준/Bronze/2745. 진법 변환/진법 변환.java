@@ -1,17 +1,24 @@
-
 import java.util.*;
 import java.io.*;
 
 /**
-문제
-B진법 수 N이 주어진다. 이 수를 10진법으로 바꿔 출력하는 프로그램을 작성하시오.
+진법 변환
 
-10진법을 넘어가는 진법은 숫자로 표시할 수 없는 자리가 있다. 이런 경우에는 다음과 같이 알파벳 대문자를 사용한다.
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+1 초	128 MB	53492	26222	22328	48.722%
+
+문제
+B진법 수 N이 주어진다. 
+이 수를 10진법으로 바꿔 출력하는 프로그램을 작성하시오.
+
+10진법을 넘어가는 진법은 숫자로 표시할 수 없는 자리가 있다. 
+이런 경우에는 다음과 같이 알파벳 대문자를 사용한다.
 
 A: 10, B: 11, ..., F: 15, ..., Y: 34, Z: 35
 
 입력
-첫째 줄에 N과 B가 주어진다. (2 ≤ B ≤ 36)
+첫째 줄에 N과 B가 주어진다. 
+(2 ≤ B ≤ 36)
 
 B진법 수 N을 10진법으로 바꾸면, 항상 10억보다 작거나 같다.
 
@@ -31,31 +38,31 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		String preStr = st.nextToken();
-		int n = Integer.parseInt(st.nextToken());
+		String orgStr = st.nextToken();
+		int ruleNum = Integer.parseInt(st.nextToken());
 		
-		LinkedList<Long> tenList = new LinkedList<Long>();
-		
-		for(int i = 0; i < preStr.length(); i++) {
-			char preChar = preStr.charAt(i);
-			long newNum;
-			if('0' <= preChar && preChar <= '9') {
-				newNum = (Character.getNumericValue(preChar));
-			}else {
-				newNum = (10 + preStr.charAt(i) - 'A');
+		int result = 0;  // 결과는 항상 10억보다 작다고 말함. 
+		int notation = orgStr.length() - 1; // 지수표시 
+		for(int i = 0; i < orgStr.length(); i++) {
+			char ch = orgStr.charAt(i);
+			int realVal;
+			
+			if('A' <= ch && ch <= 'Z') { // 숫자 대신 알파벳이 나올 경우 치환하기.
+				realVal = ch - 'A' + 10;
+			} else { // 숫자이다. 
+				realVal = ch - '0';
 			}
 			
-			tenList.add(newNum);
+			int mulNotation = 1;
+			for(int j = 0; j < notation; j++)
+				mulNotation *= ruleNum;
 			
-			for(int j = 0; j < tenList.size() - 1; j++) {
-				tenList.set(j, tenList.get(j) * n);
-			}
+			notation--;
+			
+			result += realVal * mulNotation;
 		}
-		long sum = 0;
-		for(int i = 0; i < tenList.size(); i++) {
-			sum += tenList.get(i);
-		}
-		System.out.println(sum);
+		
+		System.out.println(result);
 	}
 
 }
