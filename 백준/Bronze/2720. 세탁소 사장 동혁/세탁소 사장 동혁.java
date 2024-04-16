@@ -1,10 +1,15 @@
-
 import java.util.*;
 import java.io.*;
 
 /**
+세탁소 사장 동혁
+
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+1 초	128 MB	34369	23984	21520	70.676%
+
 문제
-미국으로 유학간 동혁이는 세탁소를 운영하고 있다. 동혁이는 최근에 아르바이트로 고등학생 리암을 채용했다.
+미국으로 유학간 동혁이는 세탁소를 운영하고 있다. 
+동혁이는 최근에 아르바이트로 고등학생 리암을 채용했다.
 
 동혁이는 리암에게 실망했다.
 
@@ -20,13 +25,16 @@ import java.io.*;
 다임(Dime, $0.10)의 개수, 
 니켈(Nickel, $0.05)의 개수, 
 페니(Penny, $0.01)의 개수를 구하는 프로그램을 작성하시오. 
+
 거스름돈은 항상 $5.00 이하이고, 손님이 받는 동전의 개수를 최소로 하려고 한다. 
-예를 들어, $1.24를 거슬러 주어야 한다면, 손님은 4쿼터, 2다임, 0니켈, 4페니를 받게 된다.
+예를 들어, $1.24를 거슬러 주어야 한다면, 
+손님은 4쿼터, 2다임, 0니켈, 4페니를 받게 된다.
 
 입력
 첫째 줄에 테스트 케이스의 개수 T가 주어진다. 
 각 테스트 케이스는 거스름돈 C를 나타내는 정수 하나로 이루어져 있다. 
-C의 단위는 센트이다. (1달러 = 100센트) (1<=C<=500)
+C의 단위는 센트이다. 
+(1달러 = 100센트) (1<=C<=500)
 
 출력
 각 테스트케이스에 대해 필요한 쿼터의 개수, 다임의 개수, 니켈의 개수, 페니의 개수를 공백으로 구분하여 출력한다.
@@ -36,6 +44,7 @@ C의 단위는 센트이다. (1달러 = 100센트) (1<=C<=500)
 124
 25
 194
+
 예제 출력 1 
 4 2 0 4
 1 0 0 0
@@ -47,44 +56,35 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int t = Integer.parseInt(br.readLine());
+		int loop = Integer.parseInt(br.readLine());
 		
-		int[] cent = new int[t];
-		
-		String s = "";
-		for(int i = 0; i < cent.length; i++) {
-			cent[i] = Integer.parseInt(br.readLine());
-		}
-		
+		int[] result = new int[4]; // 25, 10, 5, 1 
 		StringBuilder sb = new StringBuilder();
-		
-		for(int i = 0; i < t; i++) {
-			int quota = 0;
-			while(cent[i] >= 25) {
-				cent[i] -= 25;
-				quota++;
-			}
+		for(int i = 0; i < loop; i++) {
+			int price = Integer.parseInt(br.readLine());
 			
-			int daim = 0;
-			while(cent[i] >= 10) {
-				cent[i] -= 10;
-				daim++;
-			}
+			int temp = price / 25; // temporary store 25.
+			result[0] = temp;
+			price %= 25;
 			
-			int nikel = 0;
-			while(cent[i] >= 5) {
-				cent[i] -= 5;
-				nikel++;
-			}
+			temp = price / 10;
+			result[1] = temp;
+			price %= 10;
 			
-			int penny = 0;
-			while(cent[i] >= 1) {
-				cent[i] -= 1;
-				penny++;
+			temp = price / 5;
+			result[2] = temp;
+			price %= 5;
+			
+			temp = price / 1;
+			result[3] = temp;
+			price %= 1;
+			
+			for(int j = 0; j < 4; j++) {
+				sb.append(result[j]); sb.append(' ');
 			}
-			sb.append(quota + " " + daim + " " + nikel + " " + penny + "\n");
+			sb.append("\n");
 		}
-		System.out.println(sb);
+		System.out.println(sb.toString());
 	}
 
 }
