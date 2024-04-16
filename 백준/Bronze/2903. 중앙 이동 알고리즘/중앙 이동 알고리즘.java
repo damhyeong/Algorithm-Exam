@@ -1,21 +1,11 @@
-
 import java.util.*;
 import java.io.*;
 
 /**
+중앙 이동 알고리즘
 
-예제 입력 1 
-1
-예제 출력 1 
-9
-예제 입력 2 
-2
-예제 출력 2 
-25
-예제 입력 3 
-5
-예제 출력 3 
-1089
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+1 초	128 MB	25235	17981	16462	71.864%
 
 문제
 상근이는 친구들과 함께 SF영화를 찍으려고 한다. 
@@ -29,6 +19,7 @@ import java.io.*;
 
 정사각형의 각 변의 중앙에 점을 하나 추가한다.
 정사각형의 중심에 점을 하나 추가한다.
+
 초기 상태에서 위와 같은 과정을 한 번 거치면 총 4개의 정사각형이 새로 생긴다. 
 이와 같은 과정을 상근이가 만족할 때 까지 계속한다.
 
@@ -45,6 +36,19 @@ import java.io.*;
 
 출력
 첫째 줄에 과정을 N번 거친 후 점의 수를 출력한다.
+
+예제 입력 1 
+1
+예제 출력 1 
+9
+예제 입력 2 
+2
+예제 출력 2 
+25
+예제 입력 3 
+5
+예제 출력 3 
+1089
  */
 
 public class Main {
@@ -52,19 +56,14 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
+		int loop = Integer.parseInt(br.readLine());
 		
-		int point = 2; // 초기 한 변의 점의 개수 
-		
-		int sumPoint = 4; // 처음 모든 점의 개수 
-		
-		for(int i = 1; i <= n; i++) {
-			// 다음번째 변의 점의 개수는 (현재 한 변의 점의 개수) + (현재 한 변의 점의 개수 - 1) 
-			point = point + (point - 1);
-			// 전의 모든 점들은 항상 다음 점들에 포함되므로, 한 변의 점의 개수^2 - 이전 테스트 케이스의 모든 점의 개수이다. 
-			sumPoint += point * point - sumPoint;
+		int sidePoint = 2;
+		while(loop-- > 0) {
+			sidePoint += sidePoint - 1;
 		}
-		System.out.println(sumPoint);
+		
+		System.out.println(sidePoint * sidePoint);
 	}
 
 }
