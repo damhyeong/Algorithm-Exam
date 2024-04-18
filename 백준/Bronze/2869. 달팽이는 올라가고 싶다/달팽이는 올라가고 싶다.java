@@ -2,6 +2,10 @@ import java.util.*;
 import java.io.*;
 
 /**
+달팽이는 올라가고 싶다 성공다국어
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+0.25 초 (추가 시간 없음)	128 MB	251609	80014	63592	31.269%
+
 문제
 땅 위에 달팽이가 있다. 이 달팽이는 높이가 V미터인 나무 막대를 올라갈 것이다.
 
@@ -35,23 +39,25 @@ public class Main {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int A = Integer.parseInt(st.nextToken());
-		int B = Integer.parseInt(st.nextToken());
-		int V = Integer.parseInt(st.nextToken());
+		int A = Integer.parseInt(st.nextToken()); // 낮에 A미터 올라간다. 
+		int B = Integer.parseInt(st.nextToken()); // 밤에 B미터 미끄러진다.
+		int V = Integer.parseInt(st.nextToken()); // 정상은 V미터이다. 
 		
-		int sum = 0;
-		int cnt = 0;
+		int dayPerM = A - B;
 		
-		if(V <= A) {
-			System.out.printf("%d", 1);
+		int tempV = V - B;
+		
+		int result = 0;
+		
+		if(A == V) {
+			result = 1;
+		} else if(tempV % dayPerM == 0) {
+			result = tempV / dayPerM;
 		} else {
-			if((V - A) % (A - B) == 0) {
-				System.out.printf("%d", (V - A) / (A - B) + 1);
-			} else {
-				System.out.printf("%d", (V - A) / (A - B) + 2);
-			}
+			result = (tempV / dayPerM) + 1;
 		}
 		
+		System.out.println(result);
 	}
 
 }
