@@ -1,10 +1,14 @@
-
 import java.util.*;
 import java.io.*;
 
 /**
+직사각형 성공다국어
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+2 초	1024 MB	18846	16300	15701	87.310%
 문제
 정수 A, B 가 주어진다. 세로 길이가 A cm, 가로 길이가 B cm 인 아래와 같은 직사각형의 넓이를 cm2 단위로 구하시오.
+
+
 
 입력
 표준 입력에 다음과 같은 형태로 입력이 주어진다.
@@ -42,10 +46,9 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int x = Integer.parseInt(br.readLine());
-		int y = Integer.parseInt(br.readLine());
+		int A = Integer.parseInt(br.readLine()); int B = Integer.parseInt(br.readLine());
 		
-		System.out.println(x * y);
+		System.out.println(A * B);
 	}
 
 }
