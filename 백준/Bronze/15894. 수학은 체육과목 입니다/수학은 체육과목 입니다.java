@@ -1,9 +1,14 @@
-
 import java.util.*;
 import java.io.*;
 
 /**
+수학은 체육과목 입니다
+
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+1 초 (추가 시간 없음)	512 MB	37360	20318	18976	54.914%
+
 문제
+----
 성원이는 수학을 정말 못 하는 고등학생이다. 
 수학을 못하는 대신 근성과 팔 힘이 뛰어난 성원이는 수학 시험에서 수학 지식을 사용하지 않고 근성과 체력을 사용해 문제를 푼다. 
 지난 시험에서는 아래 사진에 나와있는 문제를 근성과 체력을 사용해 열심히 풀었지만 사진에서 볼 수 있듯이 틀려버리고 말았다!
@@ -18,13 +23,14 @@ import java.io.*;
 "한 변의 길이가 1인 정사각형을 아래 그림과 같이 겹치지 않게 빈틈없이 계속 붙여 나간다. 
 가장 아랫부분의 정사각형이 n개가 되었을 때, 실선으로 이루어진 도형의 둘레의 길이를 구하시오."
 
-
 가장 아랫부분의 정사각형 개수가 주어지면 그에 해당하는 답을 출력하는 프로그램을 만들어 형석이를 도와주자!
 
 입력
+---
 첫 번째 줄에 가장 아랫부분의 정사각형 개수 n이 주어진다. (1 ≤ n ≤ 109)
 
 출력
+---
 첫 번째 줄에 형석이가 말해야 하는 답을 출력한다.
 
 예제 입력 1 
@@ -42,9 +48,11 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		long n = Integer.parseInt(br.readLine());
+		long n = Long.parseLong(br.readLine());
 		
-		System.out.println(4 * n);
+		long result = 4 * n;
+		
+		System.out.println(result);
 	}
 
 }
