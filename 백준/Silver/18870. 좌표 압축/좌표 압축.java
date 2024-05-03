@@ -1,9 +1,14 @@
-
 import java.util.*;
 import java.io.*;
 
 /**
+좌표 압축
+-------
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+2 초	512 MB	94658	39901	29973	39.511%
+
 문제
+----
 수직선 위에 N개의 좌표 X1, X2, ..., XN이 있다. 이 좌표에 좌표 압축을 적용하려고 한다.
 
 Xi를 좌표 압축한 결과 X'i의 값은 Xi > Xj를 만족하는 서로 다른 좌표 Xj의 개수와 같아야 한다.
@@ -11,16 +16,19 @@ Xi를 좌표 압축한 결과 X'i의 값은 Xi > Xj를 만족하는 서로 다�
 X1, X2, ..., XN에 좌표 압축을 적용한 결과 X'1, X'2, ..., X'N를 출력해보자.
 
 입력
+-----
 첫째 줄에 N이 주어진다.
 
 둘째 줄에는 공백 한 칸으로 구분된 X1, X2, ..., XN이 주어진다.
 
 출력
+-----
 첫째 줄에 X'1, X'2, ..., X'N을 공백 한 칸으로 구분해서 출력한다.
 
 제한
+-----
 1 ≤ N ≤ 1,000,000
--10의 9승 ≤ Xi ≤ 10의 9승 
+-109 ≤ Xi ≤ 109
 예제 입력 1 
 5
 2 4 -10 4 -9
@@ -34,57 +42,218 @@ X1, X2, ..., XN에 좌표 압축을 적용한 결과 X'1, X'2, ..., X'N를 출�
  */
 
 public class Main {
-
+	public static int[] arr;
+	public static int[] noDuplicitNum;
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int N = Integer.parseInt(br.readLine());
+		
+		int[] orgArr = new int[N]; // 원본을 저장 해 둘 곳.
+		arr = new int[N]; // 정렬 될 수 - 정렬 후, 중복은 없앤다.
+		
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		
-		// 기존 값을 저장하기 위한 arr 배열 선언. 
-		int[] arr = new int[N];
-		// 중복 값을 삭제하고, 중복되지 않는 수가 몇 개인지 파악하기 위한 linkedSet 선언.
-		LinkedHashSet<Integer> linkedSet = new LinkedHashSet<Integer>();
-		
 		for(int i = 0; i < N; i++) {
 			int num = Integer.parseInt(st.nextToken());
+			orgArr[i] = num;
 			arr[i] = num;
-			linkedSet.add(num);
 		}
 		
-		// linkArr로 정렬하기 위해 중복되지 않은 수 만큼의 배열 선언 
-		int[] linkArr = new int[linkedSet.size()];
+		// ---------------------------------------------------------------------
 		
-		// Set의 Iterator 빼내기.
-		Iterator iter = linkedSet.iterator();
+		// quickSort
+		// quickSort(0, arr.length - 1);
 		
-		int k = 0;
+		// mergeSort
+		// mergeSort(arr);
 		
-		// 중복되지 않은 값을 linkArr에 저장.
-		while(iter.hasNext()) {
-			linkArr[k++] = (int) iter.next();
+		// heapSort
+		heapSort();
+		
+		// 정렬 완료. - 중복값 남은 상태.
+		
+		int initialNum = arr[0];
+		int count = 1;
+		for(int i = 1; i < arr.length; i++) {
+			int num = arr[i];
+			
+			// 이전과 중복된 값일 경우, 폐기.
+			if(initialNum == num) {
+				continue;
+			}
+			
+			// 저장해야 할 수 증가.
+			arr[count++] = num;
+			
+			initialNum = num;
 		}
 		
-		// linkArr로 정렬. => 만약 중복되지 않은 수가 4개라면, linkArr의 크기도 4이다. 
-		Arrays.sort(linkArr);
+		noDuplicitNum = new int[count];
 		
-		// 각 숫자에 좌표 압축을 위한 숫자 할당. => 키는 숫자이며, 연결된 밸류도 숫자이다.
-		// 만약 -951, 100, 500 순으로 linkArr가 계산되었다면, (-951, 0), (100, 1), (500, 2)로 매핑된다. 
-		HashMap<Integer, Integer> numMap = new HashMap<>();
-		// 위의 설명을 이행하기 위한 반복문 
-		for(int i = 0; i < linkArr.length; i++) {
-			numMap.put(linkArr[i], i);
-		}
+		for(int i = 0; i < count; i++)
+			noDuplicitNum[i] = arr[i];
 		
-		// 좌표 압축을 위해 매핑해 놓은 압축좌표를 출력하고, 한 칸 띈다.
-		for(int i = 0; i < N; i++) {
-			bw.write(numMap.get(arr[i]) + " ");
+		// noDuplicitNum에서 이분 탐색을 통해 인덱스 값을 구하자.
+		
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < orgArr.length; i++) {
+			int index = searchBinaryIndex(orgArr[i], 0, noDuplicitNum.length - 1);
+			sb.append(index); sb.append(" ");
 		}
-		bw.flush();
-		bw.close();
-		br.close();
-		// 제발 시간초과만 안되라..... 
+		System.out.println(sb.toString());
+		
 	}
-
+	
+	public static int searchBinaryIndex(int value, int start, int end) {
+		int mIdx = (start + end) / 2;
+		int mValue = noDuplicitNum[mIdx];
+		
+		if(value > mValue) {
+			return searchBinaryIndex(value, mIdx + 1, end);
+		} else if(value < mValue){
+			return searchBinaryIndex(value, start, mIdx - 1);
+		} else { // value == noDuplicitNum[mIdx] 
+			return mIdx;
+		}
+	}
+	
+	public static void quickSort(int start, int end) {
+		if(end - start <= 0)
+			return;
+		
+		int pivot = start;
+		int i = start;
+		int j = end;
+		
+		while(i < j) {
+			while(arr[pivot] < arr[j])
+				j--;
+			while(i < j && arr[pivot] >= arr[i])
+				i++;
+			
+			swapIndex(i, j);
+		}
+		swapIndex(i, pivot);
+		
+		quickSort(start, i - 1); quickSort(i + 1, end);
+	}
+	
+	public static void mergeSort(int[] arr) {
+		if(arr.length <= 1)
+			return;
+		
+		int middle = arr.length / 2;
+		
+		int[] LArr = new int[middle];
+		int[] RArr = new int[arr.length - middle];
+		
+		int count = 0;
+		for(int i = 0; i < LArr.length; i++) 
+			LArr[i] = arr[count++];
+		for(int i = 0; i < RArr.length; i++)
+			RArr[i] = arr[count++];
+		
+		mergeSort(LArr); mergeSort(RArr);
+		
+		int i = 0, j = 0, index = 0;
+		while(i < LArr.length && j < RArr.length) {
+			if(LArr[i] <= RArr[j])
+				arr[index++] = LArr[i++];
+			else
+				arr[index++] = RArr[j++];
+		}
+		
+		while(i < LArr.length)
+			arr[index++] = LArr[i++];
+		while(j < RArr.length)
+			arr[index++] = RArr[j++];
+	}
+	
+	public static void heapSort() {
+		int len = arr.length;
+		
+		for(int i = len / 2 - 1; i >= 0; i--)
+			heapify(len, i);
+		
+		for(int i = len - 1; i > 0; i--) {
+			swapIndex(0, i);
+			
+			heapify(i, 0);
+		}
+	}
+	public static void heapify(int end, int index) {
+		int parent = index;
+		int left = parent * 2 + 1;
+		int right = parent * 2 + 2;
+		
+		if(left < end && arr[parent] < arr[left])
+			parent = left;
+		if(right < end && arr[parent] < arr[right])
+			parent = right;
+		
+		if(parent != index) {
+			swapIndex(parent, index);
+			heapify(end, parent);
+		}
+	}
+	
+	public static void swapIndex(int i, int j) {
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
+	
+	public static int charToInt(char ch) {
+		switch(ch) {
+		case '0':
+			return 0;
+		case '1':
+			return 1;
+		case '2':
+			return 2;
+		case '3':
+			return 3;
+		case '4':
+			return 4;
+		case '5':
+			return 5;
+		case '6':
+			return 6;
+		case '7':
+			return 7;
+		case '8':
+			return 8;
+		case '9':
+			return 9;
+		default:
+			return -1;	
+		}
+	}
+	
+	public static char intToChar(int num) {
+		switch(num) {
+		case 0:
+			return '0';
+		case 1:
+			return '1';
+		case 2:
+			return '2';
+		case 3:
+			return '3';
+		case 4:
+			return '4';
+		case 5:
+			return '5';
+		case 6:
+			return '6';
+		case 7:
+			return '7';
+		case 8:
+			return '8';
+		case 9:
+			return '9';
+		default:
+			return '-';
+		}
+	}
 }
