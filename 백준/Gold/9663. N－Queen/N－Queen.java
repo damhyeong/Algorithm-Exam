@@ -1,11 +1,12 @@
-
 import java.util.*;
 import java.io.*;
 
-/*
-N-Queen 실패
+/**
+N-Queen
+
 시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
-10 초	128 MB	97212	46692	30312	46.763%
+10 초	128 MB	116867	56171	36372	46.565%
+
 문제
 N-Queen 문제는 크기가 N × N인 체스판 위에 퀸 N개를 서로 공격할 수 없게 놓는 문제이다.
 
@@ -24,42 +25,39 @@ N이 주어졌을 때, 퀸을 놓는 방법의 수를 구하는 프로그램을 
  */
 
 public class Main {
-	public static int cnt = 0;
-	public static int[] queenPlaced;
+	public static int[] arr;
 	public static int N;
-
+	public static int count = 0;
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
 		N = Integer.parseInt(br.readLine());
-		queenPlaced = new int[N];
 		
-		getNumOfQueen(0);
+		arr = new int[N];
 		
-		bw.write(Integer.toString(cnt));
-		bw.flush();
-		bw.close();
-		br.close();
+		recursive(N, 0);
+		
+		System.out.println(count);
 	}
-	public static void getNumOfQueen(int deep) {
-		if(N == deep) {
-			cnt++;
+	public static void recursive(int N, int deep) {
+		if(deep == N) {
+			count++;
 			return;
-		}else {
-			for(int i = 0; i < N; i++) {
-				queenPlaced[deep] = i;
-				if(possibleToPlace(deep))
-					getNumOfQueen(deep + 1);
-				
-			}
+		}
+		
+		for(int i = 0; i < N; i++) {
+			arr[deep] = i;
+			if(checkOkay(deep, i))
+				recursive(N, deep + 1);
 		}
 	}
-	public static boolean possibleToPlace(int col) {
-		for(int i = 0; i < col; i++) {
-			if(queenPlaced[i] == queenPlaced[col])
+	
+	public static boolean checkOkay(int deep, int num) {
+		for(int i = 0; i < deep; i++) {
+			if(arr[i] == arr[deep])
 				return false;
-			else if(Math.abs(queenPlaced[col] - queenPlaced[i]) == Math.abs(col - i))
+			else if(Math.abs(arr[deep] - arr[i]) == Math.abs(deep - i))
 				return false;
 		}
 		return true;
