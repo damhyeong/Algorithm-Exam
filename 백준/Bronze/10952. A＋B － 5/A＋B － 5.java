@@ -1,59 +1,24 @@
 import java.util.*;
 import java.io.*;
 
-/**
-A+B - 5
-
-시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
-1 초	256 MB	288898	151882	129244	52.358%
-
-문제
-두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.
-
-입력
-입력은 여러 개의 테스트 케이스로 이루어져 있다.
-
-각 테스트 케이스는 한 줄로 이루어져 있으며, 각 줄에 A와 B가 주어진다. 
-(0 < A, B < 10)
-
-입력의 마지막에는 0 두 개가 들어온다.
-
-출력
-각 테스트 케이스마다 A+B를 출력한다.
-
-예제 입력 1 
-1 1
-2 3
-3 4
-9 8
-5 2
-0 0
-예제 출력 1 
-2
-5
-7
-17
-7
- */
-
 public class Main {
-
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		StringBuilder sb = new StringBuilder();
-		while(true) { // 계속 진행한다. - 추후 0 0 시 종료 구현 
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			int A = Integer.parseInt(st.nextToken());
-			int B = Integer.parseInt(st.nextToken());
-			
-			if(A == 0 && B == 0) // 0 0 입력은 종료의 표시라고 함.
-				break;
-			
-			sb.append((A + B) + "\n");
-		}
-		System.out.println(sb.toString());
-	}
-
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        // 무한히 반복한다.
+        while(true) {
+            // 하나의 줄을 읽고, 토큰으로 분리할 유틸리티 클래스 선언 
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            
+            int A = Integer.parseInt(st.nextToken());
+            int B = Integer.parseInt(st.nextToken());
+            
+            // 루프 탈출 조건
+            if(A == 0 && B == 0)
+                break;
+            
+            // 출력 
+            System.out.println(A + B);
+        }
+    }
 }
