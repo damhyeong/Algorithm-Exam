@@ -1,114 +1,49 @@
-import java.util.*;
 import java.io.*;
 
-/**
-분수찾기
-
-시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
-0.5 초 (추가 시간 없음)	256 MB	123435	62634	53803	51.603%
-
-문제
-무한히 큰 배열에 다음과 같이 분수들이 적혀있다.
-
-1/1	1/2	1/3	1/4	1/5	…
-2/1	2/2	2/3	2/4	…	…
-3/1	3/2	3/3	…	…	…
-4/1	4/2	…	…	…	…
-5/1	…	…	…	…	…
-…	…	…	…	…	…
-
-이와 같이 나열된 분수들을 1/1 → 1/2 → 2/1 → 3/1 → 2/2 → … 과 같은 지그재그 순서로 
-차례대로 1번, 2번, 3번, 4번, 5번, … 분수라고 하자.
-
-X가 주어졌을 때, X번째 분수를 구하는 프로그램을 작성하시오.
-
-입력
-첫째 줄에 X(1 ≤ X ≤ 10,000,000)가 주어진다.
-
-출력
-첫째 줄에 분수를 출력한다.
-
-예제 입력 1 
-1
-예제 출력 1 
-1/1
-예제 입력 2 
-2
-예제 출력 2 
-1/2
-예제 입력 3 
-3
-예제 출력 3 
-2/1
-예제 입력 4 
-4
-예제 출력 4 
-3/1
-예제 입력 5 
-5
-예제 출력 5 
-2/2
-예제 입력 6 
-6
-예제 출력 6 
-1/3
-예제 입력 7 
-7
-예제 출력 7 
-1/4
-예제 입력 8 
-8
-예제 출력 8 
-2/3
-예제 입력 9 
-9
-예제 출력 9 
-3/2
-예제 입력 10 
-14
-예제 출력 10 
-2/4
- */
-
 public class Main {
-
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int X = Integer.parseInt(br.readLine());
-		int x = -1, y = -1;
-		
-		int count = 0; // 몇 겹 인지. 1겹 = count:2,  2겹 = count:3,  ... 
-		while(X > 0) {
-			X -= count++;
-			
-		}
-		
-		X *= -1; // X는 이동해야 하는 횟수를 의미하게 된다. 
-		
-		if(count % 2 != 0) { 
-			int mvCnt = 0;
-			for(int i = count - 1, j = 1; i >= 1 && j <= count - 1; i--, j++) {
-				if(mvCnt == X) {
-					x = i; y = j;
-					break;
-				}
-				mvCnt++;
-			}
-		} else { 
-			int mvCnt = 0;
-			for(int i = 1, j = count - 1; i <= count - 1 && j >= 1; i++, j--) {
-				if(mvCnt == X) {
-					x = i; y = j;
-					break;
-				}
-				mvCnt++;
-			}
-		}
-		
-		System.out.println(x + "/" + y);
-		
-	}
-
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int X = Integer.parseInt(br.readLine());
+        
+        // 시작 라인
+        int currLine = 0;
+       // 현재 분수 번호 초기화
+        int currNumber = 0;
+        
+        // 현재까지 파악된 분수 번호가 X 보다 작을 때. - 넘으면 해당 라인에 포함된 것으로 간주.
+        while(currNumber < X) {
+            currNumber += (currLine + 1);
+            currLine++;
+        }
+        
+        // while 탈출 시, currLine 내에 `X` 번째 분수가 있다는 결과를 얻은 상태
+       
+        int frontNum = 0;
+        int backNum = 0;
+        
+        // X 라인이 홀수 일 경우 - 시작 부분부터 중간의 분수를 구하는 경우
+        if(currLine % 2 == 1) {
+            // currLine 의 시작 분수 번째를 구해놓는다.
+            int start = currNumber - currLine + 1;
+            
+            // 이동 총량은 중간의 X 번째 - 시작 번째.
+            int move = X - start;
+            
+            frontNum = (currLine - move);
+            backNum = (move + 1);
+            
+        } else { //  X 라인이 짝수 일 경우 - 마지막 부분부터 중간의 분수를 구하는 경우
+            // currLine 의 마지막 분수 번째는 현재 currNumber 이다.
+            int end = currNumber;
+            
+            // 마지막부터 시작하는 경우, 이동 총량은 마지막 - X 번째이다.
+            int move = end - X;
+            
+            frontNum = (currLine - move);
+            backNum = (move + 1);
+        }
+        
+        System.out.println(frontNum + "/" + backNum);
+    }
 }
