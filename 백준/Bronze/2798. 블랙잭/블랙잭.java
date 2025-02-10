@@ -1,68 +1,52 @@
-
-import java.util.*;
 import java.io.*;
-
-/**
-문제
-카지노에서 제일 인기 있는 게임 블랙잭의 규칙은 상당히 쉽다. 카드의 합이 21을 넘지 않는 한도 내에서, 카드의 합을 최대한 크게 만드는 게임이다. 블랙잭은 카지노마다 다양한 규정이 있다.
-
-한국 최고의 블랙잭 고수 김정인은 새로운 블랙잭 규칙을 만들어 상근, 창영이와 게임하려고 한다.
-
-김정인 버전의 블랙잭에서 각 카드에는 양의 정수가 쓰여 있다. 그 다음, 딜러는 N장의 카드를 모두 숫자가 보이도록 바닥에 놓는다. 그런 후에 딜러는 숫자 M을 크게 외친다.
-
-이제 플레이어는 제한된 시간 안에 N장의 카드 중에서 3장의 카드를 골라야 한다. 블랙잭 변형 게임이기 때문에, 플레이어가 고른 카드의 합은 M을 넘지 않으면서 M과 최대한 가깝게 만들어야 한다.
-
-N장의 카드에 써져 있는 숫자가 주어졌을 때, M을 넘지 않으면서 M에 최대한 가까운 카드 3장의 합을 구해 출력하시오.
-
-입력
-첫째 줄에 카드의 개수 N(3 ≤ N ≤ 100)과 M(10 ≤ M ≤ 300,000)이 주어진다. 둘째 줄에는 카드에 쓰여 있는 수가 주어지며, 이 값은 100,000을 넘지 않는 양의 정수이다.
-
-합이 M을 넘지 않는 카드 3장을 찾을 수 있는 경우만 입력으로 주어진다.
-
-출력
-첫째 줄에 M을 넘지 않으면서 M에 최대한 가까운 카드 3장의 합을 출력한다.
-
-예제 입력 1 
-5 21
-5 6 7 8 9
-예제 출력 1 
-21
-예제 입력 2 
-10 500
-93 181 245 214 315 36 185 138 216 295
-예제 출력 2 
-497
- */
+import java.util.*;
 
 public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
-		
-		int[] allCard = new int[N];
-		
-		int max = 0;
-		
-		st = new StringTokenizer(br.readLine());
-		
-		for(int i = 0; i < N; i++) {
-			allCard[i] = Integer.parseInt(st.nextToken());
-		}
-		
-		for(int i = 0; i < N - 2; i++) {
-			for(int j = i + 1; j < N - 1; j++) {
-				for(int k = j + 1; k < N; k++) {
-					int newNum = allCard[i] + allCard[j] + allCard[k];
-					if(max <= newNum && newNum <= M)
-						max = newNum;
-				}
-			}
-		}
-		System.out.println(max);
-	}
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
+        // 주어지는 모든 카드의 개수 - 배열 크기 생성하면 됨.
+        int N = Integer.parseInt(st.nextToken());
+        // 딜러가 크게 외칠 숫자 - 3 개의 요소를 더했을 때, 가장 가까운 숫자를 구할 때 비교하게 됨.
+        int M = Integer.parseInt(st.nextToken());
+
+        st = new StringTokenizer(br.readLine());
+        
+        int[] cards = new int[N];
+        
+        for(int i = 0; i < N; i++)
+            cards[i] = Integer.parseInt(st.nextToken());
+
+        // 3 개를 뽑으므로. - 초기화
+        int[] select = new int[3];
+        
+        // 가장 큰 수 - 초기화
+        int max = -1;
+
+        for (int i = 0; i < N; i++) { // 1 번째 카드 선택
+            select[0] = cards[i];
+            for (int j = i + 1; j < N; j++) { // 2 번째 카드 선택
+                select[1] = cards[j];
+                for (int k = j + 1; k < N; k++) { // 3 번째 카드 선택
+                    select[2] = cards[k];
+                    
+                    // 현재 선택한 3 개의 카드에 대해서 총합을 계산한다.
+                    int sum = select[0] + select[1] + select[2];
+
+                    // 만약 딜러가 말한 숫자보다, 현재 3 개 카드의 합이 더 크면 안된다는 규칙이 있었다.
+                    if (sum > M) {
+                        // 무시하고, 다른 카드의 조합을 찾는다.
+                        continue;
+                    } else {
+                        // 현재까지 저장하고 있는 최대 값 보다, 
+                        // 조합된 3 개의 카드 합이 더 크다면, 최대값을 최신화한다.
+                        max = max < sum ? sum : max;
+                    }
+                }
+            }
+        }
+        System.out.println(max);
+    }
 }
