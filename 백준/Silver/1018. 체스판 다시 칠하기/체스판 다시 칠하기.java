@@ -1,198 +1,91 @@
-
 import java.util.*;
 import java.io.*;
 
-/**
-
-예제 입력 1 
-8 8
-WBWBWBWB
-BWBWBWBW
-WBWBWBWB
-BWBBBWBW
-WBWBWBWB
-BWBWBWBW
-WBWBWBWB
-BWBWBWBW
-예제 출력 1 
-1
-예제 입력 2 
-10 13
-BBBBBBBBWBWBW
-BBBBBBBBBWBWB
-BBBBBBBBWBWBW
-BBBBBBBBBWBWB
-BBBBBBBBWBWBW
-BBBBBBBBBWBWB
-BBBBBBBBWBWBW
-BBBBBBBBBWBWB
-WWWWWWWWWWBWB
-WWWWWWWWWWBWB
-예제 출력 2 
-12
-예제 입력 3 
-8 8
-BWBWBWBW
-WBWBWBWB
-BWBWBWBW
-WBWBWBWB
-BWBWBWBW
-WBWBWBWB
-BWBWBWBW
-WBWBWBWB
-예제 출력 3 
-0
-예제 입력 4 
-9 23
-BBBBBBBBBBBBBBBBBBBBBBB
-BBBBBBBBBBBBBBBBBBBBBBB
-BBBBBBBBBBBBBBBBBBBBBBB
-BBBBBBBBBBBBBBBBBBBBBBB
-BBBBBBBBBBBBBBBBBBBBBBB
-BBBBBBBBBBBBBBBBBBBBBBB
-BBBBBBBBBBBBBBBBBBBBBBB
-BBBBBBBBBBBBBBBBBBBBBBB
-BBBBBBBBBBBBBBBBBBBBBBW
-예제 출력 4 
-31
-예제 입력 5 
-10 10
-BBBBBBBBBB
-BBWBWBWBWB
-BWBWBWBWBB
-BBWBWBWBWB
-BWBWBWBWBB
-BBWBWBWBWB
-BWBWBWBWBB
-BBWBWBWBWB
-BWBWBWBWBB
-BBBBBBBBBB
-예제 출력 5 
-0
-예제 입력 6 
-8 8
-WBWBWBWB
-BWBWBWBW
-WBWBWBWB
-BWBBBWBW
-WBWBWBWB
-BWBWBWBW
-WBWBWWWB
-BWBWBWBW
-예제 출력 6 
-2
-예제 입력 7 
-11 12
-BWWBWWBWWBWW
-BWWBWBBWWBWW
-WBWWBWBBWWBW
-BWWBWBBWWBWW
-WBWWBWBBWWBW
-BWWBWBBWWBWW
-WBWWBWBBWWBW
-BWWBWBWWWBWW
-WBWWBWBBWWBW
-BWWBWBBWWBWW
-WBWWBWBBWWBW
-예제 출력 7 
-15
-
-문제
-지민이는 자신의 저택에서 MN개의 단위 정사각형으로 나누어져 있는 M×N 크기의 보드를 찾았다. 
-어떤 정사각형은 검은색으로 칠해져 있고, 나머지는 흰색으로 칠해져 있다. 
-지민이는 이 보드를 잘라서 8×8 크기의 체스판으로 만들려고 한다.
-
-체스판은 검은색과 흰색이 번갈아서 칠해져 있어야 한다. 
-구체적으로, 각 칸이 검은색과 흰색 중 하나로 색칠되어 있고, 변을 공유하는 두 개의 사각형은 다른 색으로 칠해져 있어야 한다. 
-따라서 이 정의를 따르면 체스판을 색칠하는 경우는 두 가지뿐이다. 
-하나는 맨 왼쪽 위 칸이 흰색인 경우, 하나는 검은색인 경우이다.
-
-보드가 체스판처럼 칠해져 있다는 보장이 없어서, 지민이는 8×8 크기의 체스판으로 잘라낸 후에 몇 개의 정사각형을 다시 칠해야겠다고 생각했다. 
-당연히 8*8 크기는 아무데서나 골라도 된다. 
-지민이가 다시 칠해야 하는 정사각형의 최소 개수를 구하는 프로그램을 작성하시오.
-
-입력
-첫째 줄에 N과 M이 주어진다. 
-N과 M은 8보다 크거나 같고, 50보다 작거나 같은 자연수이다. 
-둘째 줄부터 N개의 줄에는 보드의 각 행의 상태가 주어진다. 
-B는 검은색이며, W는 흰색이다.
-
-출력
-첫째 줄에 지민이가 다시 칠해야 하는 정사각형 개수의 최솟값을 출력한다.
- */
-
 public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        
+        // 입력될 보드의 상태를 저장할 2차원 배열 생성.
+        char[][] inputBoard = new char[N][M];
 
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
-		
-		char[][] chs = new char[N][M];
-		
-		for(int i = 0; i < N; i++) {
-			chs[i] = br.readLine().toCharArray();
-		}
-		
-		char[][] BChs = new char[8][8];
-		char[][] WChs = new char[8][8];
-		
-		for(int i = 0; i < 8; i++) {
-			for(int j = 0; j < 8; j++) {
-				if(i % 2 == 0) {
-					if(j % 2 == 0) {
-						BChs[i][j] = 'B';
-						WChs[i][j] = 'W';
-					} else {
-						BChs[i][j] = 'W';
-						WChs[i][j] = 'B';
-					}
-				} else {
-					if(j % 2 == 0) {
-						BChs[i][j] = 'W';
-						WChs[i][j] = 'B';
-					} else {
-						BChs[i][j] = 'B';
-						WChs[i][j] = 'W';
-					}
-				}
-			}
-		}
-		
-		
-		int min = N * M;
-		int BCnt = 0;
-		int WCnt = 0;
-		
-		//int nMax = 8;
-		//int mMax = 8;
-		
-		
-		
-		for(int nMax = 8; nMax <= N; nMax++) {
-			
-			for(int mMax = 8; mMax <= M; mMax++) {
-				
-				for(int i = nMax - 8, I = 0; i < nMax; i++, I++) {
-					for(int j = mMax - 8, J = 0; j < mMax; j++, J++) {
-						if(chs[i][j] != BChs[I][J])
-							BCnt++;
-						if(chs[i][j] != WChs[I][J])
-							WCnt++;
-					}
-				}
-				int BWmin = (BCnt >= WCnt) ? WCnt : BCnt;
-				if(min >= BWmin)
-					min = BWmin;
-				BCnt = 0; WCnt = 0;
-			}
-		}
-		
-		System.out.println(min);
-		
-		
-	}
+        // 하얀색 시작 보드
+        char[][] white = new char[8][8];
+        // 검은색 시작 보드
+        char[][] black = new char[8][8];
 
+        // 열과 행의 인덱스 합이 짝수인지, 홀수인지에 따라서, 간단히 흑백을 나눌수가 있단 것을 관찰 후 알게 되었다!
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                if((i + j) % 2 == 0) {
+                    white[i][j] = 'W';
+                    black[i][j] = 'B';
+                } else {
+                    white[i][j] = 'B';
+                    black[i][j] = 'W';
+                }
+            }
+        }
+
+        // 초기화 시작 
+        for(int i = 0; i < N; i++) {
+            String row = br.readLine();
+            for(int j = 0; j < M; j++) {
+                inputBoard[i][j] = row.charAt(j);
+            }
+        }
+        
+        // 최소값 초기화.
+        int minDiff = Integer.MAX_VALUE;
+        
+        // 8 x 8 칸을 잘랐을 때, 차이 최소값을 구한다.
+        for(int i = 0; i < inputBoard.length - 7; i++) {
+            for(int j = 0; j < inputBoard[0].length - 7; j++) {
+                // 현재 점으로부터 하얀색, 검은색 보드와의 최소 차이 값을 가져온다.
+                int min = getMinDiff(inputBoard, white, black, i, j);
+                
+                // 최소값 갱신.
+                minDiff = min < minDiff ? min : minDiff;
+            }
+        }
+        
+        System.out.println(minDiff);
+    }
+    
+    // 하얀색과 검은색 시작 보드 중 차이가 가장 작은 수를 반환한다.
+    static int getMinDiff(char[][] inputBoard, char[][] whiteBoard, char[][] blackBoard, int y, int x) {
+        int whiteDiff = 0;
+        int blackDiff = 0;
+        
+        // 시작점으로부터 8 줄 비교
+        for(int i = y; i < y + 8; i++) {
+            // 시작점으로부터 8 열 비교
+            for(int j = x; j < x + 8; j++) {
+                // 주어진 보드의 색상을 가져온다.
+                char currColor = inputBoard[i][j];
+                
+                // 하얀색 시작 보드의 색상 (0, 0 부터 시작해야 한다.)
+                char whiteColor = whiteBoard[i - y][j - x];
+                // 검은색 시작 보드의 색상 (이것도 0, 0 부터 시작해야 한다.)
+                char blackColor = blackBoard[i - y][j - x];
+                
+                // 하얀색 보드와의 차이를 적층하자.
+                if(currColor != whiteColor) {
+                    whiteDiff++;
+                }
+                
+                // 검은색 보드와의 차이를 적층.
+                if(currColor != blackColor) {
+                    blackDiff++;
+                }
+            }
+        }
+        
+        // 하얀색, 검은색 보드 차이 중 작은 수를 반환한다.
+        return whiteDiff < blackDiff ? whiteDiff : blackDiff;
+    }
 }
