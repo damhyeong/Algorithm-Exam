@@ -1,72 +1,57 @@
-
 import java.util.*;
 import java.io.*;
 
-/**
-
-예제 입력 1 
-18
-예제 출력 1 
-4
-예제 입력 2 
-4
-예제 출력 2 
--1
-예제 입력 3 
-6
-예제 출력 3 
-2
-예제 입력 4 
-9
-예제 출력 4 
-3
-예제 입력 5 
-11
-예제 출력 5 
-3
-
-문제
-상근이는 요즘 설탕공장에서 설탕을 배달하고 있다. 
-상근이는 지금 사탕가게에 설탕을 정확하게 N킬로그램을 배달해야 한다. 
-설탕공장에서 만드는 설탕은 봉지에 담겨져 있다. 
-봉지는 3킬로그램 봉지와 5킬로그램 봉지가 있다.
-
-상근이는 귀찮기 때문에, 최대한 적은 봉지를 들고 가려고 한다. 
-예를 들어, 18킬로그램 설탕을 배달해야 할 때, 
-3킬로그램 봉지 6개를 가져가도 되지만, 5킬로그램 3개와 3킬로그램 1개를 배달하면, 더 적은 개수의 봉지를 배달할 수 있다.
-
-상근이가 설탕을 정확하게 N킬로그램 배달해야 할 때, 봉지 몇 개를 가져가면 되는지 그 수를 구하는 프로그램을 작성하시오.
-
-입력
-첫째 줄에 N이 주어진다. (3 ≤ N ≤ 5000)
-
-출력
-상근이가 배달하는 봉지의 최소 개수를 출력한다. 만약, 정확하게 N킬로그램을 만들 수 없다면 -1을 출력한다.
-
- */
-
 public class Main {
-
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int N = Integer.parseInt(br.readLine());
-		
-		int total = 0;
-		
-		while(N != 0) {
-			if(N % 5 == 0) {
-				total += N / 5;
-				N -= N;
-			} else if(N >= 3){
-				total += 1;
-				N -= 3;
-			} else if(N < 3 && N > 0) {
-				total = -1;
-				N = 0;
-			}
-		}
-		System.out.println(total);
-	}
-
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        // 배달해야 할 총 설탕의 KG
+        int N = Integer.parseInt(br.readLine());
+        
+        // DP 를 위한 1 차원 배열 - 최대 입력값까지 생성.
+        int[] dp = new int[5001];
+        
+        // 10 KG 까지 최소값을 저장.
+        dp[0] = 0;
+        dp[1] = -1;
+        dp[2] = -1;
+        dp[3] = 1;
+        dp[4] = -1;
+        dp[5] = 1;
+        dp[6] = 2;
+        dp[7] = -1;
+        dp[8] = 2;
+        dp[9] = 3;
+        dp[10] = 2;
+        
+        // 미리 KG 에 따른 최소값을 저장해 두기 위한 반복문 
+        for(int i = 11; i <= 5000; i++) {
+            dp[i] = -1;
+            
+            // 현재 인덱스가 현재 KG 을 의미한다.
+            int currKG = i;
+            
+            // 5KG 몫 저장
+            int KG5 = currKG / 5;
+            
+            // 음수가 아닐 때 까지 진행. - 최대 5KG 봉지 수에서 하나씩 줄여가며 체크
+            while (currKG >= 0) {
+                // 5KG 봉지를 빼고 남은 설탕 무게.
+                int remain = i - (KG5 * 5);
+                
+                // 현재 남은 설탕에서 3으로 나누어진다면,
+                if(remain % 3 == 0) {
+                    // 현재 5KG 설탕 봉지 + 3KG 설탕 봉지가 최소 값이다.
+                    dp[i] = KG5 + (remain / 3);
+                    break;
+                }
+                
+                // 딱 나누어지지 않기 때문에, 5KG 봉지를 하나 뺀다.
+                KG5--;
+            }
+        }
+        
+        // 최소값까지 이미 계산해 놓은 상황에서, 주어진 "N" 키로를 바로 출력한다.
+        System.out.println(dp[N]);
+    }
 }
