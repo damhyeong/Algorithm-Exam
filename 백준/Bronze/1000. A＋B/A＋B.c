@@ -1,3 +1,11 @@
+/**
+    @Author : 공담형
+    @Email : rhdwhdals8765@gmail.com
+    @Github : damhyeong
+    @Blog : https://codecreature.tistory.com
+*/
+
+
 #include<stdio.h>
 
 extern void *malloc(size_t);
