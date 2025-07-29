@@ -216,7 +216,7 @@ void quickSort(char** strList, int start, int end) {
 int main(void) {
     char input[255];
 
-    int tree_size = 20;
+    int tree_size = 30;
 
     Tree** trees = (Tree**)malloc(sizeof(Tree*) * (tree_size + 1));
     *(trees + tree_size) = 0;
