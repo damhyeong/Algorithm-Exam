@@ -1,0 +1,119 @@
+/**
+    @Author : 공담형
+    @Email : rhdwhdals8765@gmail.com
+    @Github : https://github.com/damhyeong
+    @Blog : https://codecreature.tistory.com
+
+    "최소한의" 기능과 라이브러리를 사용하고, 나머지 기능을 직접 구현하기 때문에,
+
+    다른 C 코드를 참조하시는 것이 좋습니다.
+
+    블로그에서 다양한 컴퓨터 관점과 Computer Science 를 다루고 있으니 궁금하면 들러보셔요!
+
+    참고로, AI 작성 글이 아니라, 진짜 공식문서 뒤져가면서 힘들게 얻은 지식을 나눠보려고 합니다.
+*/
+
+/**
+N과 M (2)
+
+시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
+1 초	512 MB	102381	76473	53510	73.897%
+
+문제
+---
+자연수 N과 M이 주어졌을 때, 아래 조건을 만족하는 길이가 M인 수열을 모두 구하는 프로그램을 작성하시오.
+
+1부터 N까지 자연수 중에서 중복 없이 M개를 고른 수열
+고른 수열은 오름차순이어야 한다.
+
+입력
+---
+첫째 줄에 자연수 N과 M이 주어진다.
+
+(1 ≤ M ≤ N ≤ 8)
+
+출력
+---
+한 줄에 하나씩 문제의 조건을 만족하는 수열을 출력한다.
+
+중복되는 수열을 여러 번 출력하면 안되며, 각 수열은 공백으로 구분해서 출력해야 한다.
+
+수열은 사전 순으로 증가하는 순서로 출력해야 한다.
+
+예제 입력 1
+3 1
+예제 출력 1
+1
+2
+3
+예제 입력 2
+4 2
+예제 출력 2
+1 2
+1 3
+1 4
+2 3
+2 4
+3 4
+예제 입력 3
+4 4
+예제 출력 3
+1 2 3 4
+*/
+
+/**
+단순 2 개의 수, 그것도 한 자리의 수를 입력받기 위해 isBlank, parseInt, intToStr 를 직접 구현하는 것은 안정적이나,
+
+이번에는 딱히 그렇게 구현 할 필요가 없어 보여 내부에서 꼼수로 입출력 하기로 했다.
+
+입력은 단순히 input[0], input[2] 만 추출하여 수로 변환하면 된다.
+*/
+
+#include<stdio.h>
+
+extern void* malloc(size_t byte);
+extern void free(void* memory);
+
+void recursive(int currDeep, int deep, int prev, int len, int* list);
+
+int main(void) {
+    char input[100];
+
+    fgets(input, sizeof(input), stdin);
+
+    int N = *(input) - '0';
+    int M = *(input + 2) - '0';
+
+    int* list = (int*)malloc(sizeof(int) * (M + 1));
+
+    recursive(0, M, 0, N, list);
+
+    free(list);
+
+    return 0;
+}
+
+void recursive(int currDeep, int deep, int prev, int len, int* list) {
+    if(currDeep == deep) {
+        int idx = 0;
+        while(idx < deep) {
+            char ch = *(list + idx) + '0';
+
+            fputc(ch, stdout); fputc(' ', stdout);
+
+            idx++;
+        }
+        fputc('\n', stdout);
+
+        return;
+    }
+
+    int idx = prev + 1;
+    while(idx <= len) {
+        *(list + currDeep) = idx;
+
+        recursive(currDeep + 1, deep, idx, len, list);
+
+        idx++;
+    }
+}
