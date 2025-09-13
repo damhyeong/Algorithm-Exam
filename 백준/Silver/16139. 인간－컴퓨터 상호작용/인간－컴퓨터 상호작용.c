@@ -109,6 +109,7 @@ int main(void) {
     char* str = parseStr(stdin, &len);
 
     int** alphabetList = (int**)malloc(sizeof(int*) * ('z' - 'a' + 2));
+    *(alphabetList + ('z' - 'a' + 1)) = NULL;
 
     int idx = 0;
     while(idx < ('z' - 'a' + 1))
