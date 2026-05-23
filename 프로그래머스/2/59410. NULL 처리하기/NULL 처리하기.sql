@@ -1,0 +1,7 @@
+SELECT
+    ai.ANIMAL_TYPE, IFNULL(ai.NAME, "No name") as NAME, ai.SEX_UPON_INTAKE
+FROM
+    ANIMAL_INS ai
+
+ORDER BY
+    ai.ANIMAL_ID;
