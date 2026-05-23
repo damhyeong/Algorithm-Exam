@@ -1,0 +1,7 @@
+SELECT 
+    fp.*
+FROM
+    FOOD_PRODUCT fp
+ORDER BY
+    fp.PRICE DESC
+LIMIT 1;
