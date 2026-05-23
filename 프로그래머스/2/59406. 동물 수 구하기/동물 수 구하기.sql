@@ -1,0 +1,4 @@
+SELECT
+    COUNT(ai.ANIMAL_ID)
+FROM
+    ANIMAL_INS ai;
