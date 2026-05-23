@@ -1,0 +1,4 @@
+SELECT
+    MIN(ai.DATETIME) as "시간"
+FROM
+    ANIMAL_INS ai;
