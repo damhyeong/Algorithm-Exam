@@ -1,0 +1,11 @@
+SELECT
+    ai.ANIMAL_TYPE,
+    COUNT(ai.ANIMAL_ID) as 'count'
+FROM
+    ANIMAL_INS ai
+WHERE
+    ai.ANIMAL_TYPE = 'Cat' OR ai.ANIMAL_TYPE = 'Dog'
+GROUP BY
+    ai.ANIMAL_TYPE
+ORDER BY
+    ai.ANIMAL_TYPE ASC;
