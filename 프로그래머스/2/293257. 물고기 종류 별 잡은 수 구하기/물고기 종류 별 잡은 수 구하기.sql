@@ -1,0 +1,11 @@
+SELECT
+    COUNT(fi.id) AS FISH_COUNT,
+    fni.FISH_NAME
+FROM
+    FISH_INFO fi
+JOIN
+    FISH_NAME_INFO fni ON fi.FISH_TYPE = fni.FISH_TYPE
+GROUP BY
+    fi.FISH_TYPE
+ORDER BY
+    COUNT(fi.id) DESC;
