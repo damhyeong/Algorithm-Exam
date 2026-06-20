@@ -1,0 +1,13 @@
+SELECT
+    mp.MEMBER_ID,
+    mp.MEMBER_NAME,
+    mp.GENDER,
+    mp.DATE_OF_BIRTH
+FROM
+    MEMBER_PROFILE mp
+WHERE
+    MONTH(mp.DATE_OF_BIRTH) = 3
+    AND mp.GENDER = 'W'
+    AND mp.TLNO IS NOT NULL
+ORDER BY
+    mp.MEMBER_ID ASC;
