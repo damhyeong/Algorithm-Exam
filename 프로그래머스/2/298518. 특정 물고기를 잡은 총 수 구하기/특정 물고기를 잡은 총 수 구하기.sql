@@ -1,0 +1,9 @@
+SELECT
+    COUNT(fi.ID)
+FROM
+    FISH_INFO fi
+LEFT JOIN
+    FISH_NAME_INFO fni ON fni.FISH_TYPE = fi.FISH_TYPE
+WHERE
+    fni.FISH_NAME = 'BASS'
+    OR fni.FISH_NAME = 'SNAPPER';
